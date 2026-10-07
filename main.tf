@@ -40,7 +40,7 @@ module "vpc" {
 }
 
 module "app_security_group" {
-  source  = "terraform-aws-modules/security-group/aws//modules/web"
+  source  = "terraform-aws-modules/security-group/aws//lmodules/web"
   version = "3.17.0"
 
   name        = "web-sg-project-alpha-dev"
