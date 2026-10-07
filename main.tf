@@ -1,4 +1,10 @@
 terraform {
+  # cloud {
+  #   organization = "policy-as-code-training"
+  #   workspaces {
+  #     name = "tf-vault-qa-asmc1006"
+  #   }
+  # }
   required_providers {
     aws = {
       source = "hashicorp/aws"
@@ -29,7 +35,7 @@ module "vpc" {
 
   tags = {
     project     = "project-alpha",
-    environment = "dev"
+    environment = "development"
   }
 }
 
@@ -109,8 +115,9 @@ module "elb_http" {
 module "ec2_instances" {
   source = "./modules/aws-instance"
 
-  instance_count     = 2
-  instance_type      = "t2.micro"
+  instance_count = var.instance_count
+  instance_type  = var.instance_type
+
   subnet_ids         = module.vpc.private_subnets[*]
   security_group_ids = [module.app_security_group.this_security_group_id]
 
@@ -119,3 +126,4 @@ module "ec2_instances" {
     environment = "dev"
   }
 }
+
